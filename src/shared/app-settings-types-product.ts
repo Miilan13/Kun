@@ -582,6 +582,8 @@ export type AppSettingsV1 = {
   workflow: WorkflowSettingsV1
   design: DesignSettingsV1
   guiUpdate: GuiUpdateConfigV1
+  /** Disable automatic first-party catalog and update network requests. */
+  privacyMode?: boolean
   terminal: TerminalSettingsV1
   codePromptPrefix: string
   /**

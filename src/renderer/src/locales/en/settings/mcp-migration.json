@@ -326,6 +326,8 @@
   "apiKeyRequiredTitle": "API key required",
   "apiKeyRequiredBody": "Add an API key in Providers first. Once entered, the app can start the local AI assistant service for you.",
   "guiUpdate": "GUI updates",
+  "privacyMode": "Privacy mode",
+  "privacyModeDesc": "Disable automatic Kun catalog and update requests. Your selected AI provider can still receive prompts when you use the assistant.",
   "guiUpdateChannel": "Update channel",
   "guiUpdateChannelDesc": "Stable is the default; Frontier is only used after you switch to it. Stable only receives formal stable releases.",
   "guiUpdateChannelFrontier": "Frontier",

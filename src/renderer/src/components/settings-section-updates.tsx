@@ -25,6 +25,17 @@ export function UpdatesSettingsSection({ ctx }: { ctx: Record<string, any> }): R
   return (
     <SettingsCard title={t('sectionUpdates')}>
       <SettingRow
+        title={t('privacyMode')}
+        description={t('privacyModeDesc')}
+        control={
+          <input
+            type="checkbox"
+            checked={form.privacyMode === true}
+            onChange={(e) => update({ privacyMode: e.target.checked })}
+          />
+        }
+      />
+      <SettingRow
         title={t('guiUpdateChannel')}
         description={t('guiUpdateChannelDesc')}
         control={

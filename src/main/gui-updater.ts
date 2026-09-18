@@ -50,6 +50,7 @@ let configuredChannel: GuiUpdateChannel = normalizeGuiUpdateChannel(
 let configuredFeedUrl = ''
 let getSelectedChannel: (() => GuiUpdateChannel | Promise<GuiUpdateChannel>) | null = null
 let getSelectedLocale: (() => AppLocale | Promise<AppLocale>) | null = null
+let privacyModeGetter: (() => boolean | Promise<boolean>) | null = null
 let beforeInstallUpdate: (() => void | Promise<void>) | null = null
 let checkBeforeInstallUpdate: (() => void | Promise<void>) | null = null
 let beforeInstallUpdatePromise: Promise<void> | null = null
@@ -279,7 +280,8 @@ export function initializeGuiUpdater(
   localeGetter?: () => AppLocale | Promise<AppLocale>,
   updateInstallQuittingSetter?: (active: boolean) => void,
   healthCheck?: () => Promise<boolean>,
-  beforeInstallCheck?: () => void | Promise<void>
+  beforeInstallCheck?: () => void | Promise<void>,
+  privacyMode?: () => boolean | Promise<boolean>
 ): void {
   getMainWindow = windowGetter
   getSelectedChannel = channelGetter ?? null
@@ -288,6 +290,7 @@ export function initializeGuiUpdater(
   getSelectedLocale = localeGetter ?? null
   setUpdateInstallQuitting = updateInstallQuittingSetter ?? null
   pendingUpdateHealthCheck = healthCheck ?? null
+  privacyModeGetter = privacyMode ?? null
   if (initialized) return
   initialized = true
   if (DEVELOPMENT_APP_FLAVOR) return
@@ -395,6 +398,15 @@ export function getGuiUpdateState(): GuiUpdateState {
 export async function checkGuiUpdate(channel?: GuiUpdateChannel): Promise<GuiUpdateInfo> {
   const requestGeneration = operations.currentGeneration()
   const selectedChannel = await resolveUpdateChannel(channel)
+  if (privacyModeGetter && await privacyModeGetter()) {
+    return {
+      ok: false,
+      currentVersion: app.getVersion(),
+      channel: selectedChannel,
+      code: 'unsupported',
+      message: 'Privacy mode is enabled; network update checks are disabled.'
+    }
+  }
   if (!operations.isGenerationCurrent(requestGeneration)) {
     return {
       ok: false,

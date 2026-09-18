@@ -47,6 +47,7 @@ const REFERENCE_PRICING_SOURCES: Record<string, {
  */
 export async function prefetchCatalogPricing(store: SettingsStoreLike): Promise<void> {
   const settings = await store.load()
+  if (settings.privacyMode) return
   const providers = getModelProviderSettings(settings).providers
   for (const provider of providers) {
     const source = resolveModelProviderPresetSource(provider)

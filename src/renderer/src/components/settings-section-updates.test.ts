@@ -10,7 +10,7 @@ function render(busy: 'idle' | 'checking' | 'downloading' | 'installing'): strin
   return renderToStaticMarkup(createElement(UpdatesSettingsSection, {
     ctx: {
       t: (key: string) => key,
-      form: { guiUpdate: { channel: 'stable' } },
+      form: { guiUpdate: { channel: 'stable' }, privacyMode: false },
       update: () => undefined,
       selectControlClass: 'select',
       guiUpdateInfo: null,

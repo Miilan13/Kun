@@ -275,7 +275,8 @@ export async function loadGuiUpdaterModule(): Promise<GuiUpdaterModule> {
             async () => (await mainState.store.load()).locale,
             setUpdateInstallQuitting,
             async () => (await probeRuntimeApi(await mainState.store.load())).ok,
-            checkProviderMutationsBeforeUpdate
+            checkProviderMutationsBeforeUpdate,
+            async () => (await mainState.store.load()).privacyMode === true
           )
           mainState.guiUpdaterInitialized = true
         }

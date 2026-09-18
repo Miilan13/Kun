@@ -157,6 +157,7 @@ export function normalizeAppSettings(settings: AppSettingsV1): AppSettingsV1 {
         maybeSettings.guiUpdate?.channel ?? DEFAULT_GUI_UPDATE_CHANNEL
       )
     },
+    privacyMode: maybeSettings.privacyMode === true,
     codePromptPrefix: typeof maybeSettings.codePromptPrefix === 'string' ? maybeSettings.codePromptPrefix : '',
     chatWelcomeMessage: normalizeChatWelcomeMessage(maybeSettings.chatWelcomeMessage),
     codeAgentPersonaEnabled: maybeSettings.codeAgentPersonaEnabled !== false,
